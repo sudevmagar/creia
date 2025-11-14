@@ -32,7 +32,7 @@ Creia blends minimal design with a warm, energetic personality. The interface us
 - **Smooth geometry with 8–12px rounded corners**
 - **Fast, intuitive interactions**
 
-## 🧩 Tech Stack (Example)
+## 🧩 Tech Stack 
 
 This section depends on your build, but a common setup might include:
 
