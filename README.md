@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Creia
 
-## Getting Started
+Creia is a modern real-time collaboration platform built for teams who want to create, plan, and communicate in one clean workspace. It brings messaging, task management, and file sharing together inside a simple, focused interface designed for fast teamwork.
 
-First, run the development server:
+## ✨ What is Creia?
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Creia gives teams a shared space where everything happens in real time. Whether you're chatting, updating tasks on a Kanban board, or organizing files, everyone sees changes instantly. No switching between apps, no confusion — just smooth flow.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Key Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Real-Time Chat**  
+  Talk with your team, share updates, and keep conversations organized inside each workspace.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Kanban Task Management**  
+  Create tasks, move them between columns, assign members, and track progress visually.
 
-## Learn More
+- **File Sharing**  
+  Upload and manage files directly inside your workspace so everything stays in one place.
 
-To learn more about Next.js, take a look at the following resources:
+- **Workspaces**  
+  Create as many workspaces as you need. Each workspace has its own chat, board, and file library.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Account System**  
+  Sign up, log in, and manage your profile securely.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🎨 Design Philosophy
 
-## Deploy on Vercel
+Creia blends minimal design with a warm, energetic personality. The interface uses bold red accents, deep blacks, clean whites, and soft grays to create a focused workspace that feels both professional and friendly.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Simple, clear layout**
+- **Strong red highlights for actions and active states**
+- **Smooth geometry with 8–12px rounded corners**
+- **Fast, intuitive interactions**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🧩 Tech Stack (Example)
+
+This section depends on your build, but a common setup might include:
+
+- **Frontend:** React / Next.js, Tailwind CSS
+- **Backend:** Node.js, Express
+- **Database:** MongoDB
+- **Real-Time:** Socket.io or WebSockets
+- **Design:** Figma
+
+## 📌 Why Creia?
+
+Most collaboration tools are either too cluttered or too limited. Creia focuses on the essentials — talk, plan, share — and makes them fast and enjoyable to use. It’s built for teams who want clarity, speed, and a workspace that doesn’t get in their way.
+
+## 📦 Status
+
+Creia is currently under active development.  
+New features, UI updates, and improvements will be added regularly.
+
+---
