@@ -21,22 +21,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider
-          attribute="class"
+          attribute="class" // adds .dark to <html>
           defaultTheme="system"
           enableSystem
           enableColorScheme
         >
           <Navbar />
-          {children}
+          <main>{children}</main>
         </ThemeProvider>
       </body>
     </html>

@@ -16,7 +16,7 @@ const textVariants: any = {
 
 export default function Hero() {
   return (
-    <div className="lg:h-[80vh] flex flex-col lg:flex-row items-center justify-between bg-linear-to-b from-gray-100 via-gray-150 to-gray-200 dark:from-black dark:via-gray-950 dark:to-gray-900 text-black dark:text-white px-6 lg:px-12 py-12 lg:py-0 overflow-hidden">
+    <div className="lg:h-[80vh] flex flex-col lg:flex-row items-center justify-between bg-hero-gradient text-foreground px-6 lg:px-12 py-12 lg:py-0 overflow-hidden">
       {/* Text Side */}
       <motion.div
         className="flex flex-col gap-6 justify-center w-full lg:w-1/2 order-2 lg:order-1"
