@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { signIn, useSession } from "next-auth/react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -16,7 +17,30 @@ export default function LoginForm() {
   const [errors, setErrors] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    setFormData({ email: "", password: "" });
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrors(null);
+
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (res?.error) {
+        setErrors(res.error);
+        toast.error(res.error);
+      } else {
+        toast.success("Successfully signed in!");
+        // router.push("/dashboard"); // Redirect to dashboard
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      setErrors("An error occurred during login. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
