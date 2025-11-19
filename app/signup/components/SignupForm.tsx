@@ -1,8 +1,50 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function SignupForm() {
+  // const router = useRouter();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      // router.push("/login");
+      if (response.ok) {
+        setFormData({ name: "", email: "", password: "" });
+        toast.success("Signup successful! Please log in.");
+      } else {
+        const data = await response.json();
+        setErrors(data.message || "Signup failed. Please try again.");
+        toast.error(data.message || "Signup failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+      setErrors("An error occurred during signup. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="w-full lg:w-4/10 flex flex-col justify-between p-8 ">
       {/* Header */}
@@ -22,7 +64,10 @@ export default function SignupForm() {
       </div>
 
       {/* Signup Form */}
-      <form className="mt-4 flex flex-col gap-6 space-y-1 px-8">
+      <form
+        className="mt-4 flex flex-col gap-6 space-y-1 px-8"
+        onSubmit={handleSubmit}
+      >
         <div className="">
           <h2 className="font-bold text-sm text-foreground">
             Sign Up to Creia.
@@ -33,6 +78,8 @@ export default function SignupForm() {
           <input
             type="text"
             name="name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             placeholder=" "
             className="w-full px-4 py-3 border border-border rounded-md bg-transparent text-card-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all ease-in-out duration-300 peer"
             required
@@ -49,6 +96,10 @@ export default function SignupForm() {
           <input
             type="email"
             name="email"
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             placeholder=" "
             className="w-full px-4 py-3 border border-border rounded-md bg-transparent text-card-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all ease-in-out duration-300 peer"
             required
@@ -65,6 +116,10 @@ export default function SignupForm() {
           <input
             type="password"
             name="password"
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
             placeholder=" "
             className="w-full px-4 py-3 border border-border rounded-md bg-transparent text-card-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all ease-in-out duration-300 peer"
             required
@@ -79,9 +134,10 @@ export default function SignupForm() {
 
         <button
           type="submit"
-          className="flex justify-center items-center gap-2 bg-primary hover:bg-primary/90 text-[#f0f4f5] border-2 border-primary rounded-md px-6 py-3 text-lg font-semibold transition-all duration-500 hover:scale-105 cursor-pointer"
+          disabled={isSubmitting}
+          className="flex justify-center items-center gap-2 bg-primary hover:bg-primary/90 text-[#f0f4f5] border-2 border-primary rounded-md px-6 py-3 text-lg font-semibold transition-all duration-500 hover:scale-105 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Sign Up
+          {isSubmitting ? "Signing Up..." : "Sign Up"}
         </button>
       </form>
 
@@ -117,6 +173,9 @@ export default function SignupForm() {
           </button>
         </div>
       </div>
+
+      {/* modals */}
+      <Toaster position="top-right" />
     </div>
   );
 }
