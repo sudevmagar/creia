@@ -97,6 +97,29 @@ export default function LoginForm() {
     // await tryFetchSession();
   };
 
+  const handleGitHubAuth = async () => {
+    setOAuthLoading(true);
+    setErrors("");
+
+    try {
+      const result = await signIn("github", { redirect: false });
+      if (result?.error) {
+        setErrors("GitHub sign-in failed.");
+        setOAuthLoading(false);
+        return;
+      }
+      toast.success("Successfully signed in!");
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1500);
+    } catch (error) {
+      console.error("Error during GitHub sign-in:", error);
+      setErrors("An error occurred during GitHub sign-in. Please try again.");
+    } finally {
+      setOAuthLoading(false);
+    }
+  };
+
   return (
     <div className="w-full lg:w-4/10 flex flex-col justify-between p-8 ">
       {/* Header */}
@@ -200,6 +223,7 @@ export default function LoginForm() {
           </button>
           <button
             type="submit"
+            onClick={handleGitHubAuth}
             className="w-full flex justify-center items-center gap-4 bg-background hover:bg-primary/20 text-foreground border-2 border-border hover:border-primary rounded-md px-6 py-3 text-lg font-semibold transition-all duration-500 hover:scale-105 cursor-pointer"
           >
             <FaGithub className="text-2xl" />
