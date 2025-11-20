@@ -2,23 +2,10 @@ import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { NextAuthOptions } from "next-auth"
 import { PrismaClient } from "@prisma/client"
+import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs"
 
 const prisma = new PrismaClient()
-
-// const decipherPassword = (hashedPassword: string, shift: number) => {
-//      let result = "";
-//   shift = shift % 128; // Keep shift within ASCII range
-
-//   for (let char of hashedPassword) {
-//     // Reverse shift within printable ASCII range (32-126)
-//     let asciiVal = char.charCodeAt(0);
-//     let newAscii = ((asciiVal - 32 - shift + 95) % 95) + 32;
-//     result += String.fromCharCode(newAscii);
-//   }
-
-//   return result;
-// }
 
 declare module "next-auth" {
   interface Session {
@@ -66,6 +53,10 @@ export const authOptions: NextAuthOptions = {
                 }
                 return { id: user.id.toString(), email }
             },
+        }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
         }),
     ],
 
