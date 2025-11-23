@@ -4,6 +4,7 @@ import { ArrowRightCircle } from "lucide-react";
 import animationData from "../../public/assets/Meeting-Time.json";
 import Lottie from "lottie-react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const textVariants: any = {
   hidden: { opacity: 0, y: 20 },
@@ -59,18 +60,18 @@ export default function Hero() {
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row gap-3 mt-6">
           {/* Get Started */}
-          <button
-            type="submit"
-            className="flex justify-center items-center gap-2 border-2 border-black dark:border-white rounded-md px-6 py-3 text-lg font-semibold transition-all duration-500 hover:scale-105 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black cursor-pointer group"
+          <Link
+            href="/signup"
+            className="flex justify-center items-center gap-2 bg-primary hover:bg-primary/90 text-secondary border-2 border-primary rounded-md px-6 py-3 text-lg font-semibold transition-all duration-500 hover:scale-105 cursor-pointer group"
           >
             <span>Get Started</span>{" "}
             <ArrowRightCircle className="ml-2 w-8 h-8 transition-transform duration-500 ease-linear -rotate-45 group-hover:rotate-0" />
-          </button>
+          </Link>
 
           {/* Learn More */}
           <button
             type="button"
-            className="flex justify-center items-center gap-2 border-2 border-black dark:border-white rounded-md px-6 py-3 text-lg font-semibold transition-all duration-500 hover:scale-105 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black cursor-pointer"
+            className="flex justify-center items-center gap-2 bg-primary/10 hover:bg-primary/20 text-foreground border-2 border-primary/40 rounded-md px-6 py-3 text-lg font-semibold transition-all duration-500 hover:scale-105 cursor-pointer"
           >
             Learn More
           </button>
