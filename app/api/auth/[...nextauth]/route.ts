@@ -66,7 +66,7 @@ export const authOptions: NextAuthOptions = {
     ],
 
     callbacks: {
-        async jwt({ token, user }) {
+        async jwt({ token, user, account }) {
             if (user) {
                 token.id = user.id
                 token.email = user.email
@@ -81,6 +81,11 @@ export const authOptions: NextAuthOptions = {
             }
             return session
         },
+
+        async signIn({ user, account, profile }) {
+            // Allow all sign-ins
+            return true
+        },
     },
     pages: {
         signIn: "/login",
@@ -89,6 +94,7 @@ export const authOptions: NextAuthOptions = {
         strategy: "jwt",
         maxAge: 14 * 24 * 60 * 60,
     },
+    secret: process.env.NEXTAUTH_SECRET,
 }
 
 const handler = NextAuth(authOptions)

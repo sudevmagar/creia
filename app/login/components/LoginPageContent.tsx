@@ -7,13 +7,7 @@ import { useRouter } from "next/navigation";
 
 export default function LoginPageContent() {
   const router = useRouter();
-  // Redirect if already logged in
-  useEffect(() => {
-    const session = localStorage.getItem("session");
-    if (session) {
-      router.push("/dashboard");
-    }
-  }, [router]);
+
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-background">
       <svg width="0" height="0" aria-hidden="true" focusable="false">

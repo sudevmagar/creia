@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { FaGithub, FaGoogle } from "react-icons/fa";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
+import OAuthButton from "@/components/OAuthButton";
 
 export default function SignupForm() {
-  // const router = useRouter();
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,10 +28,13 @@ export default function SignupForm() {
         },
         body: JSON.stringify(formData),
       });
-      // router.push("/login");
+
       if (response.ok) {
         setFormData({ name: "", email: "", password: "" });
-        toast.success("Signup successful! Please log in.");
+        toast.success("Signup successful! Redirecting to login...");
+        setTimeout(() => {
+          router.push("/login");
+        }, 1500);
       } else {
         const data = await response.json();
         setErrors(data.message || "Signup failed. Please try again.");
@@ -40,6 +43,7 @@ export default function SignupForm() {
     } catch (error) {
       console.error("Error during signup:", error);
       setErrors("An error occurred during signup. Please try again.");
+      toast.error("An error occurred during signup. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -157,20 +161,8 @@ export default function SignupForm() {
 
         {/* Oauth Button */}
         <div className="mt-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <button
-            type="submit"
-            className="w-full flex justify-center items-center gap-4 bg-background hover:bg-primary/20 text-foreground border-2 border-border hover:border-primary rounded-md px-6 py-3 text-lg font-semibold transition-all duration-500 hover:scale-105 cursor-pointer"
-          >
-            <FaGoogle className="text-2xl" />
-            Google
-          </button>
-          <button
-            type="submit"
-            className="w-full flex justify-center items-center gap-4 bg-background hover:bg-primary/20 text-foreground border-2 border-border hover:border-primary rounded-md px-6 py-3 text-lg font-semibold transition-all duration-500 hover:scale-105 cursor-pointer"
-          >
-            <FaGithub className="text-2xl" />
-            GitHub
-          </button>
+          <OAuthButton provider="google" disabled={isSubmitting} />
+          <OAuthButton provider="github" disabled={isSubmitting} />
         </div>
       </div>
 

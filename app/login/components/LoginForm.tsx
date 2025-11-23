@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { signIn, useSession } from "next-auth/react";
-import { FaGithub, FaGoogle } from "react-icons/fa";
+import React, { useState } from "react";
+import { signIn } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
+import OAuthButton from "@/components/OAuthButton";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -14,7 +14,6 @@ export default function LoginForm() {
     password: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [oAuthLoading, setOAuthLoading] = useState(false);
   const [errors, setErrors] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -35,88 +34,13 @@ export default function LoginForm() {
       } else if (res && res.ok) {
         toast.success("Successfully signed in!");
         router.push("/dashboard");
+        router.refresh();
       }
     } catch (error) {
       console.error("Error during login:", error);
       setErrors("An error occurred during login. Please try again.");
     } finally {
       setIsSubmitting(false);
-    }
-  };
-
-  const handleGoogleAuth = async () => {
-    setOAuthLoading(true);
-    setErrors("");
-
-    try {
-      const result = await signIn("google", { redirect: false });
-      if (result?.error) {
-        setErrors("Google sign-in failed.");
-        setOAuthLoading(false);
-        return;
-      }
-      toast.success("Successfully signed in!");
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 1500);
-    } catch (error) {
-      console.error("Error during Google sign-in:", error);
-      setErrors("An error occurred during Google sign-in. Please try again.");
-    } finally {
-      setOAuthLoading(false);
-    }
-
-    // const maxAttempts = 5;
-    // const delay = 1000;
-
-    // const tryFetchSession = async (attempt = 1) => {
-    //   try {
-    //     const response = await fetch("/api/auth/session");
-    //     const session = await response.json();
-
-    //     if (!session?.user) {
-    //       if (attempt < maxAttempts) {
-    //         setTimeout(() => tryFetchSession(attempt + 1), delay);
-    //         return;
-    //       }
-    //       setErrors("No active session found after multiple attempts.");
-    //       setOAuthLoading(false);
-    //       return;
-    //     }
-
-    //     // Redirect based on role
-    //     const redirectPath = session.user.role === "ADMIN" ? "/admin" : "/";
-    //     router.push(redirectPath);
-    //   } catch (err) {
-    //     console.error("Error fetching session:", err);
-    //     setErrors("Failed to fetch user session.");
-    //     setOAuthLoading(false);
-    //   }
-    // };
-
-    // await tryFetchSession();
-  };
-
-  const handleGitHubAuth = async () => {
-    setOAuthLoading(true);
-    setErrors("");
-
-    try {
-      const result = await signIn("github", { redirect: false });
-      if (result?.error) {
-        setErrors("GitHub sign-in failed.");
-        setOAuthLoading(false);
-        return;
-      }
-      toast.success("Successfully signed in!");
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 1500);
-    } catch (error) {
-      console.error("Error during GitHub sign-in:", error);
-      setErrors("An error occurred during GitHub sign-in. Please try again.");
-    } finally {
-      setOAuthLoading(false);
     }
   };
 
@@ -213,22 +137,8 @@ export default function LoginForm() {
 
         {/* Oauth Button */}
         <div className="mt-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <button
-            type="submit"
-            onClick={handleGoogleAuth}
-            className="w-full flex justify-center items-center gap-4 bg-background hover:bg-primary/20 text-foreground border-2 border-border hover:border-primary rounded-md px-6 py-3 text-lg font-semibold transition-all duration-500 hover:scale-105 cursor-pointer"
-          >
-            <FaGoogle className="text-2xl" />
-            Google
-          </button>
-          <button
-            type="submit"
-            onClick={handleGitHubAuth}
-            className="w-full flex justify-center items-center gap-4 bg-background hover:bg-primary/20 text-foreground border-2 border-border hover:border-primary rounded-md px-6 py-3 text-lg font-semibold transition-all duration-500 hover:scale-105 cursor-pointer"
-          >
-            <FaGithub className="text-2xl" />
-            GitHub
-          </button>
+          <OAuthButton provider="google" disabled={isSubmitting} />
+          <OAuthButton provider="github" disabled={isSubmitting} />
         </div>
       </div>
 
