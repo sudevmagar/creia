@@ -13,9 +13,11 @@ export default function LayoutWrapper({
 
   const isLoginSignupPath =
     pathname.startsWith("/login") || pathname.startsWith("/signup");
+
+  const isDashboardPath = pathname.startsWith("/dashboard");
   return (
     <>
-      {!isLoginSignupPath && <Navbar />}
+      {!isLoginSignupPath && !isDashboardPath && <Navbar />}
       <main>{children}</main>
     </>
   );
